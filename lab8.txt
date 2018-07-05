@@ -1,0 +1,1325 @@
+
+1. db.restaurant.find()
+
+2. db.restaurants.find({},{restaurant_id:1,name:1,district:1,cuisine:1}).pretty()
+
+3. db.restaurants.find({},{restaurant_id:1,name:1,district:1,cuisine:1,_id:0}).pretty()
+
+4.db.restaurants.find({},{restaurant_id:1,name:1,district:1,"address.zipcode":1,_id:0}).pretty()
+
+5.db.restaurants.find({"district":"Bronx"}).pretty()
+
+6. db.restaurants.find({"district":"Bronx"}).limit(5).pretty()
+7. db.restaurants.find({"district":"Bronx"}).skip(5).limit(5).pretty()
+
+8. db.restaurants.find({"address.coord.0":{$lt: -95.8941893}}).pretty()
+			//output
+{ "_id" : ObjectId("5b3bc21fa403b43c901077db"), "address" : { "building" : "3707", "coord" : [ -101.8945214, 33.5197474 ], "street" : "82 Street", "zipcode" : "11372" }, "district" : "Queens", "cuisine" : "American ", "grades" : [ { "date" : ISODate("2014-06-04T00:00:00Z"), "grade" : "A", "score" : 12 }, { "date" : ISODate("2013-11-07T00:00:00Z"), "grade" : "B", "score" : 19 }, { "date" : ISODate("2013-05-17T00:00:00Z"), "grade" : "A", "score" : 11 }, { "date" : ISODate("2012-08-29T00:00:00Z"), "grade" : "A", "score" : 11 }, { "date" : ISODate("2012-04-03T00:00:00Z"), "grade" : "A", "score" : 12 }, { "date" : ISODate("2011-11-16T00:00:00Z"), "grade" : "A", "score" : 7 } ], "name" : "Burger King", "restaurant_id" : "40534067" }
+{ "_id" : ObjectId("5b3bc21fa403b43c90107b46"), "address" : { "building" : "15259", "coord" : [ -119.6368672, 36.2504996 ], "street" : "10 Avenue", "zipcode" : "11357" }, "district" : "Queens", "cuisine" : "Italian", "grades" : [ { "date" : ISODate("2014-09-04T00:00:00Z"), "grade" : "A", "score" : 11 }, { "date" : ISODate("2014-03-26T00:00:00Z"), "grade" : "A", "score" : 8 }, { "date" : ISODate("2013-03-04T00:00:00Z"), "grade" : "A", "score" : 10 }, { "date" : ISODate("2012-09-27T00:00:00Z"), "grade" : "A", "score" : 10 }, { "date" : ISODate("2012-04-20T00:00:00Z"), "grade" : "A", "score" : 7 }, { "date" : ISODate("2011-11-23T00:00:00Z"), "grade" : "C", "score" : 34 } ], "name" : "Cascarino'S", "restaurant_id" : "40668681" }
+{ "_id" : ObjectId("5b3bc21fa403b43c90107fec"), "address" : { "building" : "60", "coord" : [ -111.9975205, 42.0970258 ], "street" : "West Side Highway", "zipcode" : "10006" }, "district" : "Manhattan", "cuisine" : "Japanese", "grades" : [ { "date" : ISODate("2014-03-20T00:00:00Z"), "grade" : "A", "score" : 9 }, { "date" : ISODate("2013-06-28T00:00:00Z"), "grade" : "A", "score" : 11 }, { "date" : ISODate("2012-07-05T00:00:00Z"), "grade" : "A", "score" : 13 }, { "date" : ISODate("2011-07-27T00:00:00Z"), "grade" : "A", "score" : 2 } ], "name" : "Sports Center At Chelsea Piers (Sushi Bar)", "restaurant_id" : "40882356" }
+
+
+9. db.restaurants.find({grades: {$elemMatch: {score:{$gt: 70}}},"address.coord.0" : {$lt: -65.754168},cuisine:{$nt: "American"} }).limit(2).pretty()
+
+10. db.restaurants.find({name: {$regex:/^Wil/}},{restaurant_id:1,name:1,district:1,cuisine:1,_id:0}).pretty()
+		//Output
+	{
+			"district" : "Brooklyn",
+			"cuisine" : "Delicatessen",
+			"name" : "Wilken'S Fine Food",
+			"restaurant_id" : "40356483"
+	}
+	{
+			"district" : "Bronx",
+			"cuisine" : "American ",
+			"name" : "Wild Asia",
+			"restaurant_id" : "40357217"
+	}
+	{
+			"district" : "Bronx",
+			"cuisine" : "Pizza",
+			"name" : "Wilbel Pizza",
+			"restaurant_id" : "40871979"
+	}
+11. db.restaurants.find({name: {$regex:/ces$/}},{restaurant_id:1,name:1,district:1,cuisine:1,_id:0}).pretty()
+			//output
+	{
+			"district" : "Manhattan",
+			"cuisine" : "American ",
+			"name" : "Pieces",
+			"restaurant_id" : "40399910"
+	}
+	{
+			"district" : "Queens",
+			"cuisine" : "American ",
+			"name" : "S.M.R Restaurant Services",
+			"restaurant_id" : "40403857"
+	}
+	{
+			"district" : "Manhattan",
+			"cuisine" : "American ",
+			"name" : "Good Shepherd Services",
+			"restaurant_id" : "40403989"
+	}
+	{
+			"district" : "Queens",
+			"cuisine" : "Ice Cream, Gelato, Yogurt, Ices",
+			"name" : "The Ice Box-Ralph'S Famous Italian Ices",
+			"restaurant_id" : "40690899"
+	}
+	{
+			"district" : "Brooklyn",
+			"cuisine" : "Jewish/Kosher",
+			"name" : "Alices",
+			"restaurant_id" : "40782042"
+	}
+	{
+			"district" : "Manhattan",
+			"cuisine" : "American ",
+			"name" : "Re: Sources",
+			"restaurant_id" : "40876068"
+	}
+12. db.restaurants.find({name: {$regex:/Reg/}},{restaurant_id:1,name:1,district:1,cuisine:1,_id:0}).pretty()
+{
+        "district" : "Brooklyn",
+        "cuisine" : "American ",
+        "name" : "Regina Caterers",
+        "restaurant_id" : "40356649"
+}
+{
+        "district" : "Manhattan",
+        "cuisine" : "Café/Coffee/Tea",
+        "name" : "Caffe Reggio",
+        "restaurant_id" : "40369418"
+}
+{
+        "district" : "Manhattan",
+        "cuisine" : "American ",
+        "name" : "Regency Hotel",
+        "restaurant_id" : "40382679"
+}
+{
+        "district" : "Manhattan",
+        "cuisine" : "American ",
+        "name" : "Regency Whist Club",
+        "restaurant_id" : "40402377"
+}
+{
+        "district" : "Queens",
+        "cuisine" : "American ",
+        "name" : "Rego Park Cafe",
+        "restaurant_id" : "40523342"
+}
+{
+        "district" : "Queens",
+        "cuisine" : "Pizza",
+        "name" : "Regina Pizza",
+        "restaurant_id" : "40801325"
+}
+{
+        "district" : "Manhattan",
+        "cuisine" : "American ",
+        "name" : "Regal Entertainment Group",
+        "restaurant_id" : "40891782"
+}
+13. db.restaurants.find({$and:[{district:"Bronx"}, {$or:[{cuisine:"American"},{cuisine:"Chinese"}]}]}).pretty()
+{
+        "_id" : ObjectId("5b3bc21ea403b43c901071b6"),
+        "address" : {
+                "building" : "1236",
+                "coord" : [
+                        -73.8893654,
+                        40.81376179999999
+                ],
+                "street" : "238 Spofford Ave",
+                "zipcode" : "10474"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2013-12-30T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 8
+                },
+                {
+                        "date" : ISODate("2013-01-08T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 10
+                },
+                {
+                        "date" : ISODate("2012-06-12T00:00:00Z"),
+                        "grade" : "B",
+                        "score" : 15
+                }
+        ],
+        "name" : "Happy Garden",
+        "restaurant_id" : "40363289"
+}
+{
+        "_id" : ObjectId("5b3bc21ea403b43c901071c8"),
+        "address" : {
+                "building" : "277",
+                "coord" : [
+                        -73.8941893,
+                        40.8634684
+                ],
+                "street" : "East Kingsbridge Road",
+                "zipcode" : "10458"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-03-03T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 10
+                },
+                {
+                        "date" : ISODate("2013-09-26T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 10
+                },
+                {
+                        "date" : ISODate("2013-03-19T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 10
+                },
+                {
+                        "date" : ISODate("2012-08-29T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 11
+                },
+                {
+                        "date" : ISODate("2011-08-17T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 13
+                }
+        ],
+        "name" : "Happy Garden",
+        "restaurant_id" : "40364296"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c90107740"),
+        "address" : {
+                "building" : "2459",
+                "coord" : [
+                        -73.8929629,
+                        40.8601605
+                ],
+                "street" : "Webster Avenue",
+                "zipcode" : "10458"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-12-23T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2014-01-07T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 8
+                },
+                {
+                        "date" : ISODate("2012-12-28T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 11
+                },
+                {
+                        "date" : ISODate("2012-07-18T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 13
+                }
+        ],
+        "name" : "China Wok Ii",
+        "restaurant_id" : "40510328"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c901077cb"),
+        "address" : {
+                "building" : "2102",
+                "coord" : [
+                        -73.82609699999999,
+                        40.8687177
+                ],
+                "street" : "Bartow Ave",
+                "zipcode" : "10475"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-08-04T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2014-02-21T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 4
+                },
+                {
+                        "date" : ISODate("2013-05-30T00:00:00Z"),
+                        "grade" : "B",
+                        "score" : 17
+                },
+                {
+                        "date" : ISODate("2012-04-13T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                }
+        ],
+        "name" : "Dragon City",
+        "restaurant_id" : "40529203"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c9010787a"),
+        "address" : {
+                "building" : "3511",
+                "coord" : [
+                        -73.9100876,
+                        40.8860444
+                ],
+                "street" : "Johnson Avenue",
+                "zipcode" : "10463"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-07-02T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 5
+                },
+                {
+                        "date" : ISODate("2013-11-06T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 8
+                },
+                {
+                        "date" : ISODate("2013-03-29T00:00:00Z"),
+                        "grade" : "B",
+                        "score" : 17
+                },
+                {
+                        "date" : ISODate("2012-06-20T00:00:00Z"),
+                        "grade" : "B",
+                        "score" : 27
+                }
+        ],
+        "name" : "Hunan Balcony",
+        "restaurant_id" : "40551996"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c9010787b"),
+        "address" : {
+                "building" : "732",
+                "coord" : [
+                        -73.883128,
+                        40.85353
+                ],
+                "street" : "East  187 Street",
+                "zipcode" : "10458"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-11-07T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                },
+                {
+                        "date" : ISODate("2014-05-15T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2013-11-18T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2013-06-10T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                },
+                {
+                        "date" : ISODate("2012-09-17T00:00:00Z"),
+                        "grade" : "B",
+                        "score" : 19
+                }
+        ],
+        "name" : "Great Wall Restaurant",
+        "restaurant_id" : "40552226"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c9010790d"),
+        "address" : {
+                "building" : "202",
+                "coord" : [
+                        -73.9164504,
+                        40.8341845
+                ],
+                "street" : "East  167 Street",
+                "zipcode" : "10456"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-12-10T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                },
+                {
+                        "date" : ISODate("2013-12-12T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2012-12-20T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                },
+                {
+                        "date" : ISODate("2012-08-01T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2012-03-13T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                }
+        ],
+        "name" : "Lucky House Restaurant",
+        "restaurant_id" : "40571587"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c9010791b"),
+        "address" : {
+                "building" : "1474",
+                "coord" : [
+                        -73.88122729999999,
+                        40.8281391
+                ],
+                "street" : "Westchester Avenue",
+                "zipcode" : "10472"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-12-24T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 10
+                },
+                {
+                        "date" : ISODate("2014-01-13T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 10
+                },
+                {
+                        "date" : ISODate("2013-01-08T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                }
+        ],
+        "name" : "New Wah Kitchen",
+        "restaurant_id" : "40573101"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c90107bd7"),
+        "address" : {
+                "building" : "1702",
+                "coord" : [
+                        -73.9137269,
+                        40.8482958
+                ],
+                "street" : "Grand Avenue",
+                "zipcode" : "10453"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-04-16T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 11
+                },
+                {
+                        "date" : ISODate("2013-04-10T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 11
+                },
+                {
+                        "date" : ISODate("2012-03-14T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 5
+                },
+                {
+                        "date" : ISODate("2011-09-22T00:00:00Z"),
+                        "grade" : "B",
+                        "score" : 17
+                }
+        ],
+        "name" : "New Hing Restaurant",
+        "restaurant_id" : "40701165"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c90107d97"),
+        "address" : {
+                "building" : "1811",
+                "coord" : [
+                        -73.8518311,
+                        40.8504655
+                ],
+                "street" : "Williamsbridge Road",
+                "zipcode" : "10461"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-03-26T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                },
+                {
+                        "date" : ISODate("2013-03-05T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                },
+                {
+                        "date" : ISODate("2012-09-12T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                },
+                {
+                        "date" : ISODate("2012-04-17T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                },
+                {
+                        "date" : ISODate("2011-11-03T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 4
+                }
+        ],
+        "name" : "Hong Kong Restaurant",
+        "restaurant_id" : "40765358"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c90107e22"),
+        "address" : {
+                "building" : "796",
+                "coord" : [
+                        -73.91637759999999,
+                        40.8226814
+                ],
+                "street" : "Courtlandt Avenue",
+                "zipcode" : "10451"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-08-15T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2013-08-27T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                },
+                {
+                        "date" : ISODate("2013-03-06T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2012-08-14T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 13
+                },
+                {
+                        "date" : ISODate("2012-03-21T00:00:00Z"),
+                        "grade" : "B",
+                        "score" : 17
+                },
+                {
+                        "date" : ISODate("2011-10-24T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                }
+        ],
+        "name" : "Kristy'S Restaurant",
+        "restaurant_id" : "40804049"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c90107e9c"),
+        "address" : {
+                "building" : "1634",
+                "coord" : [
+                        -73.8306577,
+                        40.8450232
+                ],
+                "street" : "Crosby Avenue",
+                "zipcode" : "10461"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-08-08T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                },
+                {
+                        "date" : ISODate("2013-07-23T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2012-12-14T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                },
+                {
+                        "date" : ISODate("2012-06-25T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 6
+                },
+                {
+                        "date" : ISODate("2011-10-03T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 8
+                }
+        ],
+        "name" : "East Dynasty",
+        "restaurant_id" : "40827529"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c90107ee0"),
+        "address" : {
+                "building" : "2461",
+                "coord" : [
+                        -73.9041182,
+                        40.8644648
+                ],
+                "street" : "University Avenue",
+                "zipcode" : "10468"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-04-10T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2013-03-27T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 4
+                },
+                {
+                        "date" : ISODate("2012-10-25T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 13
+                },
+                {
+                        "date" : ISODate("2012-10-11T00:00:00Z"),
+                        "grade" : "P",
+                        "score" : 2
+                },
+                {
+                        "date" : ISODate("2011-11-01T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 11
+                },
+                {
+                        "date" : ISODate("2011-04-20T00:00:00Z"),
+                        "grade" : "B",
+                        "score" : 17
+                }
+        ],
+        "name" : "Lin Home Chinese Restaura",
+        "restaurant_id" : "40842437"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c90107efe"),
+        "address" : {
+                "building" : "70",
+                "coord" : [
+                        -73.9066601,
+                        40.8592187
+                ],
+                "street" : "West  183 Street",
+                "zipcode" : "10453"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-12-01T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 4
+                },
+                {
+                        "date" : ISODate("2014-07-02T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 11
+                },
+                {
+                        "date" : ISODate("2014-01-23T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2013-07-24T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2013-01-14T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 13
+                },
+                {
+                        "date" : ISODate("2012-07-19T00:00:00Z"),
+                        "grade" : "B",
+                        "score" : 20
+                },
+                {
+                        "date" : ISODate("2011-12-21T00:00:00Z"),
+                        "grade" : "B",
+                        "score" : 14
+                }
+        ],
+        "name" : "Peacock Restaurant",
+        "restaurant_id" : "40849313"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c90107f32"),
+        "address" : {
+                "building" : "317",
+                "coord" : [
+                        -73.909629,
+                        40.837446
+                ],
+                "street" : "East 170 Street",
+                "zipcode" : "10456"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-12-03T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 10
+                },
+                {
+                        "date" : ISODate("2014-04-26T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                },
+                {
+                        "date" : ISODate("2013-11-19T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                },
+                {
+                        "date" : ISODate("2013-05-06T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2012-09-11T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 11
+                },
+                {
+                        "date" : ISODate("2012-04-17T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 13
+                }
+        ],
+        "name" : "Lin'S Garden",
+        "restaurant_id" : "40857406"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c90108048"),
+        "address" : {
+                "building" : "3906",
+                "coord" : [
+                        -73.8612466,
+                        40.8858379
+                ],
+                "street" : "White Plains Road",
+                "zipcode" : "10466"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-05-12T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                },
+                {
+                        "date" : ISODate("2013-10-07T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 6
+                },
+                {
+                        "date" : ISODate("2012-10-04T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 10
+                },
+                {
+                        "date" : ISODate("2011-10-05T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                },
+                {
+                        "date" : ISODate("2011-06-30T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                }
+        ],
+        "name" : "New Rainbow Restaurant",
+        "restaurant_id" : "40899178"
+}
+14. db.restaurants.find({$or:[{district:"Staten Island"},{district:"Bronx"},{district:"Queens"},{district:"Brooklyn"}]},{restaurant_id:1,name:1,district:1,cuisine:1,_id:0}).pretty()
+{
+        "district" : "Bronx",
+        "cuisine" : "Bakery",
+        "name" : "Morris Park Bake Shop",
+        "restaurant_id" : "30075445"
+}
+{
+        "district" : "Brooklyn",
+        "cuisine" : "Hamburgers",
+        "name" : "Wendy'S",
+        "restaurant_id" : "30112340"
+}
+{
+        "district" : "Brooklyn",
+        "cuisine" : "American ",
+        "name" : "Riviera Caterer",
+        "restaurant_id" : "40356018"
+}
+{
+        "district" : "Queens",
+        "cuisine" : "Jewish/Kosher",
+        "name" : "Tov Kosher Kitchen",
+        "restaurant_id" : "40356068"
+}
+{
+        "district" : "Queens",
+        "cuisine" : "American ",
+        "name" : "Brunos On The Boulevard",
+        "restaurant_id" : "40356151"
+}
+{
+        "district" : "Staten Island",
+        "cuisine" : "Jewish/Kosher",
+        "name" : "Kosher Island",
+        "restaurant_id" : "40356442"
+}
+{
+        "district" : "Brooklyn",
+        "cuisine" : "Delicatessen",
+        "name" : "Wilken'S Fine Food",
+        "restaurant_id" : "40356483"
+}
+{
+        "district" : "Brooklyn",
+        "cuisine" : "American ",
+        "name" : "Regina Caterers",
+        "restaurant_id" : "40356649"
+}
+{
+        "district" : "Brooklyn",
+        "cuisine" : "Ice Cream, Gelato, Yogurt, Ices",
+        "name" : "Taste The Tropics Ice Cream",
+        "restaurant_id" : "40356731"
+}
+{
+        "district" : "Bronx",
+        "cuisine" : "American ",
+        "name" : "Wild Asia",
+        "restaurant_id" : "40357217"
+}
+{
+        "district" : "Brooklyn",
+        "cuisine" : "American ",
+        "name" : "C & C Catering Service",
+        "restaurant_id" : "40357437"
+}
+{
+        "district" : "Brooklyn",
+        "cuisine" : "Chinese",
+        "name" : "May May Kitchen",
+        "restaurant_id" : "40358429"
+}
+{
+        "district" : "Brooklyn",
+        "cuisine" : "Jewish/Kosher",
+        "name" : "Seuda Foods",
+        "restaurant_id" : "40360045"
+}
+{
+        "district" : "Brooklyn",
+        "cuisine" : "Ice Cream, Gelato, Yogurt, Ices",
+        "name" : "Carvel Ice Cream",
+        "restaurant_id" : "40360076"
+}
+{
+        "district" : "Queens",
+        "cuisine" : "Ice Cream, Gelato, Yogurt, Ices",
+        "name" : "Carvel Ice Cream",
+        "restaurant_id" : "40361322"
+}
+{
+        "district" : "Brooklyn",
+        "cuisine" : "Delicatessen",
+        "name" : "Nordic Delicacies",
+        "restaurant_id" : "40361390"
+}
+{
+        "district" : "Brooklyn",
+        "cuisine" : "American ",
+        "name" : "The Movable Feast",
+        "restaurant_id" : "40361606"
+}
+{
+        "district" : "Queens",
+        "cuisine" : "Delicatessen",
+        "name" : "Sal'S Deli",
+        "restaurant_id" : "40361618"
+}
+{
+        "district" : "Queens",
+        "cuisine" : "Delicatessen",
+        "name" : "Steve Chu'S Deli & Grocery",
+        "restaurant_id" : "40361998"
+}
+{
+        "district" : "Brooklyn",
+        "cuisine" : "Hamburgers",
+        "name" : "White Castle",
+        "restaurant_id" : "40362344"
+}
+15.db.restaurants.find({district:{$nin: ["Staten Island","Bronx","Queens","Brooklyn"]}}).limit(5).pretty()
+18. db.restaurants.find().sort({$natural:1}).limit(5).pretty()
+{
+        "_id" : ObjectId("5b3bc21ea403b43c90107193"),
+        "address" : {
+                "building" : "1007",
+                "coord" : [
+                        -73.856077,
+                        40.848447
+                ],
+                "street" : "Morris Park Ave",
+                "zipcode" : "10462"
+        },
+        "district" : "Bronx",
+        "cuisine" : "Bakery",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-03-03T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 2
+                },
+                {
+                        "date" : ISODate("2013-09-11T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 6
+                },
+                {
+                        "date" : ISODate("2013-01-24T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 10
+                },
+                {
+                        "date" : ISODate("2011-11-23T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                },
+                {
+                        "date" : ISODate("2011-03-10T00:00:00Z"),
+                        "grade" : "B",
+                        "score" : 14
+                }
+        ],
+        "name" : "Morris Park Bake Shop",
+        "restaurant_id" : "30075445"
+}
+{
+        "_id" : ObjectId("5b3bc21ea403b43c90107194"),
+        "address" : {
+                "building" : "469",
+                "coord" : [
+                        -73.961704,
+                        40.662942
+                ],
+                "street" : "Flatbush Avenue",
+                "zipcode" : "11225"
+        },
+        "district" : "Brooklyn",
+        "cuisine" : "Hamburgers",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-12-30T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 8
+                },
+                {
+                        "date" : ISODate("2014-07-01T00:00:00Z"),
+                        "grade" : "B",
+                        "score" : 23
+                },
+                {
+                        "date" : ISODate("2013-04-30T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                },
+                {
+                        "date" : ISODate("2012-05-08T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                }
+        ],
+        "name" : "Wendy'S",
+        "restaurant_id" : "30112340"
+}
+{
+        "_id" : ObjectId("5b3bc21ea403b43c90107195"),
+        "address" : {
+                "building" : "351",
+                "coord" : [
+                        -73.98513559999999,
+                        40.7676919
+                ],
+                "street" : "West   57 Street",
+                "zipcode" : "10019"
+        },
+        "district" : "Manhattan",
+        "cuisine" : "Irish",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-09-06T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 2
+                },
+                {
+                        "date" : ISODate("2013-07-22T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 11
+                },
+                {
+                        "date" : ISODate("2012-07-31T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                },
+                {
+                        "date" : ISODate("2011-12-29T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                }
+        ],
+        "name" : "Dj Reynolds Pub And Restaurant",
+        "restaurant_id" : "30191841"
+}
+{
+        "_id" : ObjectId("5b3bc21ea403b43c90107196"),
+        "address" : {
+                "building" : "2780",
+                "coord" : [
+                        -73.98241999999999,
+                        40.579505
+                ],
+                "street" : "Stillwell Avenue",
+                "zipcode" : "11224"
+        },
+        "district" : "Brooklyn",
+        "cuisine" : "American ",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-06-10T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 5
+                },
+                {
+                        "date" : ISODate("2013-06-05T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2012-04-13T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                },
+                {
+                        "date" : ISODate("2011-10-12T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                }
+        ],
+        "name" : "Riviera Caterer",
+        "restaurant_id" : "40356018"
+}
+{
+        "_id" : ObjectId("5b3bc21ea403b43c90107197"),
+        "address" : {
+                "building" : "97-22",
+                "coord" : [
+                        -73.8601152,
+                        40.7311739
+                ],
+                "street" : "63 Road",
+                "zipcode" : "11374"
+        },
+        "district" : "Queens",
+        "cuisine" : "Jewish/Kosher",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-11-24T00:00:00Z"),
+                        "grade" : "Z",
+                        "score" : 20
+                },
+                {
+                        "date" : ISODate("2013-01-17T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 13
+                },
+                {
+                        "date" : ISODate("2012-08-02T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 13
+                },
+                {
+                        "date" : ISODate("2011-12-15T00:00:00Z"),
+                        "grade" : "B",
+                        "score" : 25
+                }
+        ],
+        "name" : "Tov Kosher Kitchen",
+        "restaurant_id" : "40356068"
+} 
+
+  19. db.restaurants.find().sort({$natural:-1}).limit(5).pretty()
+{
+        "_id" : ObjectId("5b3bc21fa403b43c9010804e"),
+        "address" : {
+                "building" : "8405",
+                "coord" : [
+                        -74.02521709999999,
+                        40.6224629
+                ],
+                "street" : "5 Avenue",
+                "zipcode" : "11209"
+        },
+        "district" : "Brooklyn",
+        "cuisine" : "Chinese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-02-25T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                },
+                {
+                        "date" : ISODate("2013-08-14T00:00:00Z"),
+                        "grade" : "C",
+                        "score" : 28
+                },
+                {
+                        "date" : ISODate("2012-07-18T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 13
+                },
+                {
+                        "date" : ISODate("2012-03-09T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 13
+                },
+                {
+                        "date" : ISODate("2011-10-27T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                },
+                {
+                        "date" : ISODate("2011-05-19T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 13
+                }
+        ],
+        "name" : "Chopstix Restaurant",
+        "restaurant_id" : "40900694"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c9010804d"),
+        "address" : {
+                "building" : "1412",
+                "coord" : [
+                        -73.9866522,
+                        40.7536411
+                ],
+                "street" : "Broadway",
+                "zipcode" : "10018"
+        },
+        "district" : "Manhattan",
+        "cuisine" : "Sandwiches/Salads/Mixed Buffet",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-04-16T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 5
+                },
+                {
+                        "date" : ISODate("2013-04-12T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                },
+                {
+                        "date" : ISODate("2012-04-11T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 13
+                },
+                {
+                        "date" : ISODate("2011-12-02T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                }
+        ],
+        "name" : "Europa Cafe",
+        "restaurant_id" : "40900039"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c9010804c"),
+        "address" : {
+                "building" : "108",
+                "coord" : [
+                        -73.98394379999999,
+                        40.75611139999999
+                ],
+                "street" : "West   44 Street",
+                "zipcode" : "10036"
+        },
+        "district" : "Manhattan",
+        "cuisine" : "Japanese",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-05-31T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 7
+                },
+                {
+                        "date" : ISODate("2013-05-29T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 11
+                },
+                {
+                        "date" : ISODate("2012-05-15T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 11
+                }
+        ],
+        "name" : "Sushi Zen",
+        "restaurant_id" : "40899971"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c9010804b"),
+        "address" : {
+                "building" : "451",
+                "coord" : [
+                        -73.9462238,
+                        40.656571
+                ],
+                "street" : "Clarkson Avenue",
+                "zipcode" : "11203"
+        },
+        "district" : "Brooklyn",
+        "cuisine" : "Café/Coffee/Tea",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-04-14T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 3
+                },
+                {
+                        "date" : ISODate("2013-04-23T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 2
+                },
+                {
+                        "date" : ISODate("2012-05-02T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                },
+                {
+                        "date" : ISODate("2011-12-27T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 11
+                },
+                {
+                        "date" : ISODate("2011-09-08T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 10
+                },
+                {
+                        "date" : ISODate("2011-04-23T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                }
+        ],
+        "name" : "Andy'S Cafeteria",
+        "restaurant_id" : "40899816"
+}
+{
+        "_id" : ObjectId("5b3bc21fa403b43c9010804a"),
+        "address" : {
+                "building" : "145",
+                "coord" : [
+                        -73.986544,
+                        40.7337697
+                ],
+                "street" : "3 Avenue",
+                "zipcode" : "10003"
+        },
+        "district" : "Manhattan",
+        "cuisine" : "Café/Coffee/Tea",
+        "grades" : [
+                {
+                        "date" : ISODate("2014-09-22T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 5
+                },
+                {
+                        "date" : ISODate("2013-09-24T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 9
+                },
+                {
+                        "date" : ISODate("2012-10-11T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 11
+                },
+                {
+                        "date" : ISODate("2011-10-31T00:00:00Z"),
+                        "grade" : "A",
+                        "score" : 12
+                }
+        ],
+        "name" : "Starbucks Coffee",
+        "restaurant_id" : "40899767"
+}
+
+21. db.restaurants.find({"address.street":{$exists:true}}).sort({$natural:-1}).limit(5).pretty()
